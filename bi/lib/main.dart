@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bi/menu.dart';
+import 'package:bi/screens/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,18 +11,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'E-Commerce App',
+      title: 'Flutter Demo',
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.black, // Black background
-        appBarTheme: AppBarTheme(
-          backgroundColor: Color(0xFF3E1A78), // Darker purple for AppBar
+        colorScheme: ColorScheme(
+          primary: const Color(0xFF1E0028), // Darker shade of purple
+          secondary: const Color(0xFF1E0028),
+          surface: const Color(0xFF1E0028),
+          background: const Color(0xFF1E0028),
+          error: Colors.red,
+          onPrimary: Colors.orange,
+          onSecondary: Colors.orange,
+          onSurface: Colors.orange,
+          onBackground: Colors.orange,
+          onError: Colors.white,
+          brightness: Brightness.dark,
         ),
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.deepPurple,
-        ).copyWith(secondary: Color(0xFF3E1A78)), // Dark purple
+        scaffoldBackgroundColor: const Color(0xFF1E0028),
+        appBarTheme: AppBarTheme(
+          backgroundColor: const Color(0xFF1E0028),
+          foregroundColor: Colors.orange,
+        ),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }

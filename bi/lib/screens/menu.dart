@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:bi/widgets/left_drawer.dart';
+import 'package:bi/widgets/mood_card.dart';
+import 'package:bi/screens/moodentry_form.dart'; // Import MoodEntryFormPage
 
 class MyHomePage extends StatelessWidget {
-  final String npm = '2306256356'; // NPM
-  final String name = 'Heinrich'; // Name
-  final String className = 'KKI'; // Class
-
-  const MyHomePage({super.key});
+  final String npm = '2306256356';
+  final String name = 'Heinrich';
+  final String className = 'KKI';
 
   final List<ItemHomepage> items = const [
-    ItemHomepage("View Products", Icons.shop), // Default color
-    ItemHomepage("Add Product", Icons.add, color: Colors.blue), // Dark blue
-    ItemHomepage("Logout", Icons.logout, color: Colors.red), // Dark red
+    ItemHomepage("View Products", Icons.shop),
+    ItemHomepage("Add Product", Icons.add, color: Colors.blue),
+    ItemHomepage("Logout", Icons.logout, color: Colors.red),
   ];
+
+  const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bhat It', style: TextStyle(color: Colors.orange)), // Orange text
-        backgroundColor: Color(0xFF2A003A), // Darker purple for AppBar
+        title: const Text(
+          'Bhat It',
+          style: TextStyle(color: Colors.orange),
+        ),
+        backgroundColor: const Color(0xFF2A003A),
+        iconTheme: const IconThemeData(color: Colors.orange),
       ),
+      drawer: const LeftDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -34,12 +42,14 @@ class MyHomePage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16.0),
-            const Text(
-              'Welcome to Bhat It', // Title remains unchanged
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18.0,
-                color: Colors.orange, // Orange text color
+            const Center(
+              child: Text(
+                'Welcome to Bhat It',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                  color: Colors.orange,
+                ),
               ),
             ),
             const SizedBox(height: 16.0),
@@ -68,7 +78,7 @@ class InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2.0,
-      color: Color(0xFF2A003A), // Darker purple for InfoCard
+      color: const Color(0xFF2A003A),
       child: Container(
         width: MediaQuery.of(context).size.width / 3.5,
         padding: const EdgeInsets.all(16.0),
@@ -76,10 +86,10 @@ class InfoCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.orange), // Orange text
+              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
             ),
             const SizedBox(height: 8.0),
-            Text(content, style: const TextStyle(color: Colors.orange)), // Orange text
+            Text(content, style: const TextStyle(color: Colors.orange)),
           ],
         ),
       ),
@@ -92,8 +102,7 @@ class ItemHomepage {
   final IconData icon;
   final Color color;
 
-  const ItemHomepage(this.name, this.icon, {this.color = Colors.orange}); // Default color
-
+  const ItemHomepage(this.name, this.icon, {this.color = Colors.orange});
 }
 
 class ItemCard extends StatelessWidget {
@@ -104,13 +113,28 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Color(0xFF2A003A), // Darker purple for buttons
+      color: const Color(0xFF2A003A),
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("You have pressed the ${item.name} button!", style: const TextStyle(color: Colors.orange))), // Orange text
-          );
+          if (item.name == "Add Product") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MoodEntryFormPage(), // Navigate to the form
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  "You have pressed the ${item.name} button!",
+                  style: const TextStyle(color: Colors.black),
+                ),
+                backgroundColor: Colors.orange,
+              ),
+            );
+          }
         },
         child: Container(
           padding: const EdgeInsets.all(8),
@@ -120,14 +144,14 @@ class ItemCard extends StatelessWidget {
               children: [
                 Icon(
                   item.icon,
-                  color: item.color, // Set icon color based on item
+                  color: item.color,
                   size: 30.0,
                 ),
                 const Padding(padding: EdgeInsets.all(3)),
                 Text(
                   item.name,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: item.color), // Set text color based on item
+                  style: TextStyle(color: item.color),
                 ),
               ],
             ),
